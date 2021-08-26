@@ -22,20 +22,22 @@ The repository contains three directories:
 
 ### The data
 The data is presented in either .csv or .mat files. To access the info and headers in the .mat files you can use the following script:
-~~~~~~~~~~~~~~~~~~~~~~~~
+
+```python
+from scipy.io import loadmat
 data = loadmat(filename)
 locals().update(data)
-~~~~~~~~~~~~~~~~~~~~~~~~
+```
 
 ### The scripts
 The list below gives the purpose, outputs, and main options of each script:
 
-1. IridiumGeomagneticFieldDataMaps.py - reads in the spherical harmonic coefficients and produces the global magnetic field maps. Also outputs the VGO magnetic field data. This script has an option to analyze the data with the m=0 signal removed or included.
-2. AccioSV.py - reads in the output file from the script above and produces the secular variation (SV) time series at each VGO. A .mat fie containing the SV time series at each VGO is produced. 
-3. SmoothSV_AccioJerk.py - reads in the output file from the script above and identifies geomagnetic jerks in the dataset. The file outputs the timing and amplitude of jerk at each VGO.
-4. JoinJerkData.py - reads in the output file from the script above and joins all the different jerks from different VGOs into one dataset seperated by the concavity of the SV (i.e. peak or valley shaped jerk). This script has an option to analyze each different component of the magnetic field. 
-5. JoinPeakValley.py - reads in the output file from SmoothSV_AccioJerk.py and joins all the different jerks from different VGOs into one dataset without seperating the peaks and valleys as seperate files. The peaks and valleys are still identifiable through the sign of the jerk amplitude. 
-6. OverallScript.sh - runs through scripts 1 through 5 and produces all their outputs in one go. 
+1. `IridiumGeomagneticFieldDataMaps.py` - reads in the spherical harmonic coefficients and produces the global magnetic field maps. Also outputs the VGO magnetic field data. This script has an option to analyze the data with the m=0 signal removed or included.
+2. `AccioSV.py` - reads in the output file from the script above and produces the secular variation (SV) time series at each VGO. A .mat fie containing the SV time series at each VGO is produced. 
+3. `SmoothSV_AccioJerk.py` - reads in the output file from the script above and identifies geomagnetic jerks in the dataset. The file outputs the timing and amplitude of jerk at each VGO.
+4. `JoinJerkData.py` - reads in the output file from the script above and joins all the different jerks from different VGOs into one dataset seperated by the concavity of the SV (i.e. peak or valley shaped jerk). This script has an option to analyze each different component of the magnetic field. 
+5. `JoinPeakValley.py` - reads in the output file from SmoothSV_AccioJerk.py and joins all the different jerks from different VGOs into one dataset without seperating the peaks and valleys as seperate files. The peaks and valleys are still identifiable through the sign of the jerk amplitude. 
+6. `OverallScript.sh` - runs through scripts 1 through 5 and produces all their outputs in one go. 
 
 ## Interactive Script
 To be published once review process is complete.
