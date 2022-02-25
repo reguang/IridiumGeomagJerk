@@ -28,7 +28,7 @@ date_peak_a = []
 month_peak_a = []
 year_peak_a = []
 halfwidth_peak_a = []
-halfwidth_mean_peak_a =[]
+#halfwidth_mean_peak_a =[]
 mag_peak_a = []
 
 for filename in inputs:
@@ -50,14 +50,14 @@ for filename in inputs:
                 month = month_p.flatten()[i]
                 year = year_p.flatten()[i]
                 hw = hw_p.flatten()[i]
-                hw_mean = hwm_p.flatten()[i]
+                #hw_mean = hwm_p.flatten()[i]
                 mag = mag_p.flatten()[i]
                 
                 date_peak_a.append(date)
                 month_peak_a.append(month) 
                 year_peak_a.append(year) 
                 halfwidth_peak_a.append(hw)
-                halfwidth_mean_peak_a.append(hw_mean)
+                #halfwidth_mean_peak_a.append(hw_mean)
                 mag_peak_a.append(mag)
          
     if filename[10] == 'V':
@@ -76,14 +76,15 @@ for filename in inputs:
                 hw = hw_v.flatten()[i]
                 if hw > 0.:
                     print(hw, 'lat & long',lat, lon, date)
-                hw_mean = hwm_v.flatten()[i]
+                #hw_mean = hwm_v.flatten()[i]
                 mag = mag_v.flatten()[i]
                 
                 date_peak_a.append(date)
                 month_peak_a.append(month) 
                 year_peak_a.append(year) 
                 halfwidth_peak_a.append(hw)
-                halfwidth_mean_peak_a.append(hw_mean)
+                #halfwidth_mean_peak_a.append(hw_mean)
                 mag_peak_a.append(mag)
                         
-savemat('MasterJerk_Btheta.mat', {'lat_p':lat_array_peak,'lon_p':lon_array_peak,'date_p':date_peak_a,'month_p':month_peak_a,'year_p':year_peak_a,'hw_p':halfwidth_peak_a,'hwm_p':halfwidth_mean_peak_a,'mag_p':mag_peak_a})
+#savemat('MasterJerk_Btheta.mat', {'lat_p':lat_array_peak,'lon_p':lon_array_peak,'date_p':date_peak_a,'month_p':month_peak_a,'year_p':year_peak_a,'hw_p':halfwidth_peak_a,'hwm_p':halfwidth_mean_peak_a,'mag_p':mag_peak_a})
+savemat('MasterJerk_Btheta.mat', {'lat_p':lat_array_peak,'lon_p':lon_array_peak,'date_p':date_peak_a,'month_p':month_peak_a,'year_p':year_peak_a,'hw_p':halfwidth_peak_a,'mag_p':mag_peak_a})

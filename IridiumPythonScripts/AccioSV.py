@@ -35,6 +35,8 @@ lon_ideal = np.arange(-180, 180+bb_res, bb_res)
 lat_ideal = np.arange(-90, 90+bb_res, bb_res)
 sc = 1.5
 
+year_norm = [-0.00023242300987797793, 0.1694363742010459, 0.3391051714119698, 0.5092388146426496, 0.6789076118535735, 0.8485764090644974, 1.0182452062754213]
+
 # Let's make a directory to store all the outputs! 
 dirname = 'TimeSeriesPlots'
 
@@ -115,24 +117,33 @@ for long in range(len(lon_ideal)-1):
         t_s_plot_norm = (t_s_plot_a - min(t_s_plot_a))/(max(t_s_plot_a) - min(t_s_plot_a))
         
         plt.figure(1)
+        #plt.plot(t_s_plot_norm, Br_plot_a,'o-',label='data')
         plt.plot(t_s_plot_norm, Br_plot_a,'o-')
+        #legend()
         xlabel('Time')
         ylabel(r"$B_{r}$, nT")
-        xticks(arange(0.,1.1,0.16666), ['2010','2011','2012','2013','2014','2015','2016'])
+        xticks(year_norm, ['2010','2011','2012','2013','2014','2015','2016'])
         plt.title(r"$B_{r}$ for latitude %d & longitude %d"%(lat_oc,long_oc))
         
+        
         plt.figure(2)
+        #plt.plot(t_s_plot_norm, Btheta_plot_a,'o-',label='data')
         plt.plot(t_s_plot_norm, Btheta_plot_a,'o-')
+        #legend()
         xlabel('Time')
         ylabel(r"$B_{\theta}$, nT")
-        xticks(arange(0.,1.1,0.16666), ['2010','2011','2012','2013','2014','2015','2016'])
+#       xticks(arange(0.,1.1,0.16666), ['2010','2011','2012','2013','2014','2015','2016'])
+        xticks(year_norm, ['2010','2011','2012','2013','2014','2015','2016'])
         plt.title(r"$B_{\theta}$ for latitude %d & longitude %d"%(lat_oc,long_oc))
         
+        
         plt.figure(3)
+        #plt.plot(t_s_plot_norm, Bphi_plot_a,'o-',label='data')
         plt.plot(t_s_plot_norm, Bphi_plot_a,'o-')
+        #legend()
         xlabel('Time')
         ylabel(r"$B_{\phi}$, nT")
-        xticks(arange(0.,1.1,0.16666), ['2010','2011','2012','2013','2014','2015','2016'])
+        xticks(year_norm, ['2010','2011','2012','2013','2014','2015','2016'])
         plt.title(r"$B_{\phi}$ for latitude %d & longitude %d"%(lat_oc,long_oc))
         
         # Calculating the polynomial fit for the 18 month windows, sliding by 1 month
@@ -390,7 +401,7 @@ for long in range(len(lon_ideal)-1):
         plt.plot(t_slope_a, Br_mean_seg_a,'o-')
         xlabel('Time')
         ylabel(r"$B_{r}$, nT")
-        xticks(arange(0.,1.1,0.16666), ['2010','2011','2012','2013','2014','2015','2016'])
+        xticks(year_norm, ['2010','2011','2012','2013','2014','2015','2016'])
         plt.title(r'$B_{r}$ From Polynomial Fit Segments for latitude %d & longitude %d'%(lat_oc,long_oc))
         plt.savefig('TimeSeriesPlots/Br_fit_seg_lat_%d_long_%d.png'%(lat_oc,long_oc), dpi=400)
         
@@ -398,7 +409,7 @@ for long in range(len(lon_ideal)-1):
         plt.plot(t_slope_a, Btheta_mean_seg_a,'o-')
         xlabel('Time')
         ylabel(r"$B_{\theta}$, nT")
-        xticks(arange(0.,1.1,0.16666), ['2010','2011','2012','2013','2014','2015','2016'])
+        xticks(year_norm, ['2010','2011','2012','2013','2014','2015','2016'])
         plt.title(r'$B_{\theta}$ From Polynomial Fit Segments for latitude %d & longitude %d'%(lat_oc,long_oc))
         plt.savefig('TimeSeriesPlots/Btheta_fit_seg_lat_%d_long_%d.png'%(lat_oc,long_oc), dpi=400)
         
@@ -406,40 +417,46 @@ for long in range(len(lon_ideal)-1):
         plt.plot(t_slope_a, Bphi_mean_seg_a,'o-')
         xlabel('Time')
         ylabel(r"$B_{\phi}$, nT")
-        xticks(arange(0.,1.1,0.16666), ['2010','2011','2012','2013','2014','2015','2016'])
+        xticks(year_norm, ['2010','2011','2012','2013','2014','2015','2016'])
         plt.title(r'$B_{\phi}$ From Polynomial Fit Segments for latitude %d & longitude %d'%(lat_oc,long_oc))
         plt.savefig('TimeSeriesPlots/Bphi_fit_seg_lat_%d_long_%d.png'%(lat_oc,long_oc), dpi=400)
         
+        t_slope_a_6 = t_slope_a*6
+        year_norm_6 = [-0.00023242300987797793*6, 0.1694363742010459*6, 0.3391051714119698*6, 0.5092388146426496*6, 0.6789076118535735*6, 0.8485764090644974*6, 1.0182452062754213*6]	    
+	
         figure(7)
-        plt.plot(t_slope_a, gradient(Br_mean_seg_a,t_slope_a),'o-')
+        plt.plot(t_slope_a_6, gradient(Br_mean_seg_a,t_slope_a_6),'o-')
         xlabel('Time')
         ylabel(r"$B_{r}$, nT/yr")
-        xticks(arange(0.,1.1,0.16666), ['2010','2011','2012','2013','2014','2015','2016'])
+        xticks(year_norm_6, ['2010','2011','2012','2013','2014','2015','2016'])
         plt.ylim(-600,350)
         plt.title(r'$B_{r}$ slope for latitude %d & longitude %d'%(lat_oc,long_oc))
         plt.savefig('TimeSeriesPlots/Br_grad_lat_%d_long_%d_norm.png'%(lat_oc,long_oc), dpi=400)
         
+        
         figure(8)
-        plt.plot(t_slope_a, gradient(Btheta_mean_seg_a,t_slope_a),'o-')
+        plt.plot(t_slope_a_6, gradient(Btheta_mean_seg_a,t_slope_a_6),'o-')
         xlabel('Time')
         ylabel(r"$B_{\theta}$, nT/yr")
-        xticks(arange(0.,1.1,0.16666), ['2010','2011','2012','2013','2014','2015','2016'])
+        xticks(year_norm_6, ['2010','2011','2012','2013','2014','2015','2016'])
         plt.ylim(-250,340)
         plt.title(r'$B_{\theta}$ slope for latitude %d & longitude %d'%(lat_oc,long_oc))
         plt.savefig('TimeSeriesPlots/Btheta_grad_lat_%d_long_%d_norm.png'%(lat_oc,long_oc), dpi=400)
         
+        
         figure(9)
-        plt.plot(t_slope_a, gradient(Bphi_mean_seg_a,t_slope_a),'o-')
+        plt.plot(t_slope_a_6, gradient(Bphi_mean_seg_a,t_slope_a_6),'o-')
         xlabel('Time')
         ylabel(r"$B_{\phi}$, nT/yr")
-        xticks(arange(0.,1.1,0.16666), ['2010','2011','2012','2013','2014','2015','2016'])
+        xticks(year_norm_6, ['2010','2011','2012','2013','2014','2015','2016'])
         plt.ylim(-200,275)
         plt.title(r'$B_{\phi}$ slope for latitude %d & longitude %d'%(lat_oc,long_oc))
         plt.savefig('TimeSeriesPlots/Bphi_grad_lat_%d_long_%d_norm.png'%(lat_oc,long_oc), dpi=400)
         
-        Br_grad = gradient(Br_mean_seg_a,t_slope_a)
-        Btheta_grad = gradient(Btheta_mean_seg_a,t_slope_a)
-        Bphi_grad = gradient(Bphi_mean_seg_a,t_slope_a)
+        
+        Br_grad = gradient(Br_mean_seg_a,t_slope_a_6)
+        Btheta_grad = gradient(Btheta_mean_seg_a,t_slope_a_6)
+        Bphi_grad = gradient(Bphi_mean_seg_a,t_slope_a_6)
 
         savemat('grad_timeseries_b_%d_%d.mat' %(lat_oc, long_oc), {'Br_grad':Br_grad, 'Btheta_grad':Btheta_grad, 'Bphi_grad':Bphi_grad,'time':t_slope_a})        
 
