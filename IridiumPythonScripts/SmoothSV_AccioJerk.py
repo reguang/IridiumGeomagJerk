@@ -215,8 +215,8 @@ for filename in inputs:
     if len(Br_grad2) !=0. :
     
         
-        Br_grad_smooth = signal.savgol_filter(Br_grad2,21,2)
-        Br_grad_smooth = signal.savgol_filter(Br_grad_smooth,21,2)
+        Br_grad_smooth = signal.savgol_filter(Br_grad2,11,2) # chnage 11 to21 or 31, depending on how smooth you want it
+        Br_grad_smooth = signal.savgol_filter(Br_grad_smooth,11,2)
        
         peaks = signal.argrelextrema(Br_grad_smooth,np.greater, order =6)[0]
         valleys = signal.argrelextrema(Br_grad_smooth,np.less, order =6)[0]
@@ -414,8 +414,8 @@ for filename in inputs:
     
     if len(Btheta_grad2) !=0. :
     
-        Btheta_grad_smooth = signal.savgol_filter(Btheta_grad2,21,2)
-        Btheta_grad_smooth = signal.savgol_filter(Btheta_grad_smooth,21,2)
+        Btheta_grad_smooth = signal.savgol_filter(Btheta_grad2,11,2)
+        Btheta_grad_smooth = signal.savgol_filter(Btheta_grad_smooth,11,2)
        
         peaks = signal.argrelextrema(Btheta_grad_smooth,np.greater, order =6)[0]
         valleys = signal.argrelextrema(Btheta_grad_smooth,np.less, order =6)[0]
@@ -616,8 +616,8 @@ for filename in inputs:
     
     if len(Bphi_grad2) !=0. :
     
-        Bphi_grad_smooth = signal.savgol_filter(Bphi_grad2,21,2)
-        Bphi_grad_smooth = signal.savgol_filter(Bphi_grad_smooth,21,2)
+        Bphi_grad_smooth = signal.savgol_filter(Bphi_grad2,11,2)
+        Bphi_grad_smooth = signal.savgol_filter(Bphi_grad_smooth,11,2)
        
         peaks = signal.argrelextrema(Bphi_grad_smooth,np.greater, order =6)[0]
         valleys = signal.argrelextrema(Bphi_grad_smooth,np.less, order =6)[0]

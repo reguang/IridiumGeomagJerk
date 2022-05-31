@@ -28,6 +28,15 @@ from dateutil.relativedelta import *
 # Load File #
 #############
 
+min_t = 43200
+max_t = 185911200
+
+def get_normalized_t(t):
+    t1 = datetime(2010, 1, 1, 00, 00, 00)
+    t2 = t
+    delta_t_norm = ((t2-t1).total_seconds() - min_t)/(max_t-min_t)
+    return delta_t_norm
+
 inputs = np.sort(glob('filteredbin*.mat'))
 
 bb_res = 9
@@ -233,9 +242,12 @@ for long in range(len(lon_ideal)-1):
             Bphi_c_2.append(Bphi_polyfit_c[2])
             Bphi_c_3.append(Bphi_polyfit_c[3])
             
-            # Mid point fo the fit (Check this please)
-            t_slope = date_fit[int(len(date_fit)/2)]
-            t_slope_a.append(t_slope)
+            # Mid point for the fit 
+            mid_fit_t = start_d+relativedelta(months=+9)
+            t_slope = get_normalized_t(mid_fit_t)
+            
+            if t_slope <= 1.:
+                t_slope_a.append(t_slope)  
             
             # Plot the fits
             figure(1)
@@ -281,9 +293,10 @@ for long in range(len(lon_ideal)-1):
         
         for i in range(len(t_slope_a)):
             
-            t_inq = t_slope_a[i]
+            t_inq_1 = t_slope_a[i] # normalized between 0 & 1 for entire data range
+                            
+            idx = where( (t_start_a < t_inq_1) & (t_end_a > t_inq_1) )[0]
             
-            idx = where( (t_start_a < t_inq) & (t_end_a > t_inq) )[0]
             
             Br_fit_t = []
             Br_slope_t = []
@@ -293,6 +306,8 @@ for long in range(len(lon_ideal)-1):
             Bphi_slope_t = []
             
             for k in idx:#t_up_lim, t_low_lim):
+                
+                t_inq = (t_inq_1 - t_start_a[k])/(t_end_a[k] - t_start_a[k])
                 
                 Br_c_0_t = Br_c_0[k]
                 Br_c_1_t = Br_fit_slope[k]
@@ -421,7 +436,7 @@ for long in range(len(lon_ideal)-1):
         plt.title(r'$B_{\phi}$ From Polynomial Fit Segments for latitude %d & longitude %d'%(lat_oc,long_oc))
         plt.savefig('TimeSeriesPlots/Bphi_fit_seg_lat_%d_long_%d.png'%(lat_oc,long_oc), dpi=400)
         
-        t_slope_a_6 = t_slope_a*6
+        t_slope_a_6 = t_slope_a*5.89 # 5.89 years from start to end point of data.
         year_norm_6 = [-0.00023242300987797793*6, 0.1694363742010459*6, 0.3391051714119698*6, 0.5092388146426496*6, 0.6789076118535735*6, 0.8485764090644974*6, 1.0182452062754213*6]	    
 	
         figure(7)
